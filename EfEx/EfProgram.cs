@@ -1,4 +1,5 @@
 ﻿using EfEx.Domain;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 
@@ -8,14 +9,24 @@ namespace EfEx
     {
         static void Main(string[] args)
         {
-            var ctx = new NorthwindContext();
+            var dataService = new DataService();
 
-            var categories = ctx.Categories;
-
-            foreach (var category in categories)
+            foreach(var category in dataService.GetCategories())
             {
                 Console.WriteLine(category);
             }
+        }
+
+        static void FirstTake()
+        {
+            var ctx = new NorthwindContext();
+
+            //var categories = ctx.Categories;
+
+            //foreach (var category in categories)
+            //{
+            //    Console.WriteLine(category);
+            //}
 
             //var cat = new Category
             //{
@@ -27,17 +38,20 @@ namespace EfEx
             //ctx.Categories.Add(cat);
             //ctx.SaveChanges();
 
-            var cat = ctx.Categories.Find(101);
+            //var cat = ctx.Categories.Find(101);
 
-            cat.Name = "New name";
-            ctx.SaveChanges();
-
-
-
-
+            //cat.Name = "New name";
+            //ctx.SaveChanges();
 
             //ctx.Categories.Remove(ctx.Categories.Find(101));
             //ctx.SaveChanges();
+
+            var products = ctx.Products.Include(x => x.Category);
+
+            foreach (var product in products)
+            {
+                Console.WriteLine(product);
+            }
         }
     }
 }
