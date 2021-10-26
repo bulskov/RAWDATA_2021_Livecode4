@@ -16,7 +16,7 @@ namespace AdoEx
     }
 
 
-    public class Program
+    public class AdoProgram
     {
         static void Main(string[] args)
         {
